@@ -11,19 +11,27 @@ def store_passwords(data):
         rule = pw[0].split() # separate numbers and letter
         maxmin = rule[0].split("-") # separate numbers
         corp = [(maxmin[0],maxmin[1],rule[1]), pw[1]]
-        passes[corp[0]] = corp[1]
+        if corp[0] not in passes:
+            passes[corp[0]] = [corp[1]]
+        else:
+            passes[corp[0]].append(corp[1])
     return passes
 
 
 def validate(data):
     valid = 0
+    passwcount = 0
     for k,v in data.items():
-        ct = 0
+        passwcount += len(v)
         for x in v:
-            if k[2] == x:
-                ct += 1
-        if int(k[0]) <= ct <= int(k[1]):
-            valid += 1
+            ct = 0
+            for ch in x:
+                if k[2] == ch:
+                    ct += 1
+            if int(k[0]) <= ct <= int(k[1]):
+                valid += 1
+    if passwcount != 1000:
+        print("values missing")
     return valid
 
 
