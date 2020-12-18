@@ -34,6 +34,19 @@ def validate(data):
         print("values missing")
     return valid
 
+def positions(data):
+    valid = 0
+    for k, v in data.items():
+        for x in v:
+            if x[int(k[0])] == k[2] and x[int(k[1])] != k[2]:
+                valid += 1
+            elif x[int(k[1])] == k[2] and x[int(k[0])] != k[2]:
+                valid += 1
+            else:
+                pass
+    return valid
+
+
 
 if __name__ == '__main__':
     f = open("pw.txt", "r")
@@ -45,4 +58,5 @@ if __name__ == '__main__':
     #print(validate(sampledict))
     dict = store_passwords(lines)
     correct = validate(dict)
-    print(correct)
+    actual = positions(dict)
+    print(actual)
